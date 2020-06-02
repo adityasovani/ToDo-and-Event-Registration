@@ -1,0 +1,37 @@
+<h1 mat-dialog-title>
+    <mat-icon>info</mat-icon> User Details
+</h1>
+<div mat-dialog-content>
+    <mat-list role="list">
+        <mat-divider></mat-divider>
+        <mat-list-item role="listitem">
+            <mat-icon>person</mat-icon><Strong>&nbsp;Name: </Strong>&nbsp; {{data.fullName}}
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item role="listitem">
+            <mat-icon>email</mat-icon><Strong> &nbsp;Email: </Strong>&nbsp;{{data.email}}
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item role="listitem">
+            <mat-icon>phone_iphone</mat-icon><Strong>&nbsp;Mobile: </Strong>&nbsp;{{data.mobile}}
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item role="listitem">
+            <mat-icon>date_range</mat-icon><Strong>&nbsp;Registration Date: </Strong>&nbsp;{{data.date | date}}
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item role="listitem">
+            <mat-icon>category</mat-icon><Strong>&nbsp;Registration Type: </Strong>&nbsp;{{data.registrationType}}
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item role="listitem">
+            <mat-icon>confirmation_number</mat-icon><Strong>&nbsp;No. of Tickets: </Strong>&nbsp;{{data.noOfTicket}}
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item role="listitem" style="height: auto;">
+            <br>
+            <strong><mat-icon>photo</mat-icon>Id: </strong>
+            <img [src]='data.idImage' alt="Id" style="max-width: 500px;max-height: 500px;" />
+        </mat-list-item>
+    </mat-list>
+</div>

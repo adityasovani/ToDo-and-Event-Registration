@@ -1,0 +1,69 @@
+@import url(https://fonts.googleapis.com/css?family=Mrs+Sheppards);
+.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+  }
+  svg {
+    width : 100px;
+    height: 100px;
+    position: absolute;
+  }
+  
+  button{
+    outline: none;
+  }
+  
+  svg.animate path {
+    animation: dash 3s linear both;
+    animation-delay: 0.5s;
+  }
+  
+  @keyframes dash {
+    0% { stroke-dashoffset: 210; }
+    75% { stroke-dashoffset: -220; }
+    100% { stroke-dashoffset: -205; }
+  }
+
+
+* {
+  margin:0; border:0;
+  /*
+  border:1px solid red;
+  */
+}
+#holder {
+  display: block;
+}
+#holder .box {
+  
+  border-radius: 25px 25px 8px 8px;
+  background: -webkit-linear-gradient(top,#eee,#fff, #ddd);
+
+}
+#holder .box img{
+  width: 120px;
+  margin: 18px 0 0 0;
+  border:1px solid #eee;
+  border-radius: 2px;
+  background-color:rgba(255,255,255,0.5);
+  padding: 4px;
+}
+#holder .box h1{
+  font-family: 'trebuchet ms', 'sans serif';
+  font-weight: normal;
+  font-size: 22px;
+}
+#holder .box .tie {
+  background-image: -webkit-linear-gradient(top,#999,#666);
+  height: 50px;
+  border-radius: 25px 25px 0 0;
+}
+#holder .box h1.rname {
+  font-family: 'century gothic', 'sans serif';
+  font-size: 15px;
+  margin:5px 0 0 0; padding:0;
+}

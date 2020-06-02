@@ -1,0 +1,125 @@
+<mat-drawer-container class="example-container" [hasBackdrop]="true">
+    <mat-drawer class="bg-dark" #drawer mode="over">
+        <mat-list>
+            <mat-list-item class="text-light clickable active" (click)='drawer.close()' routerLink='/dashboard'>
+                <mat-icon mat-list-icon>dashboard</mat-icon>
+                <div mat-line>Dashboard</div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item class="text-light clickable" (click)='drawer.close()' routerLink='viewAll'>
+                <mat-icon mat-list-icon>list_alt</mat-icon>
+                <div mat-line>View Registrations</div>
+            </mat-list-item>
+            <mat-list-item (click)='drawer.close();logout()'>
+                <button mat-flat-button color="primary">
+                    <mat-icon>power_settings_new</mat-icon> Logout
+                </button>
+            </mat-list-item>
+        </mat-list>
+    </mat-drawer>
+    <mat-drawer-content>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="navbar-brand">
+                <button class="navbar-brand" mat-icon-button color="accent" (click)="drawer.toggle()"
+                    aria-label="Example icon button with a menu icon">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span class="h3">Admin</span>
+            </div>
+        </nav>
+        <div class="container">
+
+            <div class="row" *ngIf='router.url == "/dashboard"'>
+                <div class="col-md-6">
+                    <div class="cont"><br>
+                        <span class="display-3">Registrations</span>
+                        <div class="panel post clickable" routerLink='/dashboard/viewAll'>
+                            <a><span>{{noOfRegistrations}} </span>Registrations</a>
+                        </div>
+                        <div class="panel comment">
+                            <a><span>{{noOfpersonalRegistrations}} </span>Personal</a>
+                        </div>
+                        <div class="panel page">
+                            <a><span>{{noOfcorporateRegistrations}} </span>Corporate</a>
+                        </div>
+                        <div class="panel corporate">
+                            <a><span>{{noOfgroupRegistrations}} </span>Group</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <google-chart #chart title="Registration types" type="PieChart" [data]='chartData' height='300'
+                        width='400'>
+                    </google-chart>
+                    <google-chart #chart title="Registration by Dates" type="LineChart" [data]='regByDate'
+                        [options]='options'>
+                    </google-chart>
+                </div>
+            </div>
+            <div class="row" *ngIf='router.url == "/dashboard/viewAll"' style="overflow-x: auto;">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10" style="padding-top: 2rem;">
+                    <mat-form-field style="width: 20vw;">
+                        <mat-label>Filter</mat-label>
+                        <mat-icon matSuffix>search</mat-icon>
+                        <input matInput (keyup)="applyFilter($event)">
+                    </mat-form-field>
+                    <table mat-table class="table-bordered table-striped" [dataSource]="dataSource" matSort
+                        style="width: 100%;">
+
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <mat-icon>person</mat-icon> Name
+                            </th>
+                            <td mat-cell *matCellDef="let registration"> {{registration.fullName}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="email">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <mat-icon>alternate_email</mat-icon> Email
+                            </th>
+                            <td mat-cell *matCellDef="let registration"> {{registration.email}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="mobile">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <mat-icon>smartphone</mat-icon> Mobile
+                            </th>
+                            <td mat-cell *matCellDef="let registration"> {{registration.mobile}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="registrationType">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <mat-icon>notes</mat-icon> Registration Type
+                            </th>
+                            <td mat-cell *matCellDef="let registration"> {{registration.registrationType}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="date">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <mat-icon>calendar_today</mat-icon> Registration Date
+                            </th>
+                            <td mat-cell *matCellDef="let registration"> {{registration.date | date}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <mat-icon>details</mat-icon> View Details
+                            </th>
+                            <td mat-cell *matCellDef="let registration">
+                                <button mat-icon-button color="primary" (click)='show(registration._id)'>
+                                    <mat-icon>remove_red_eye</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

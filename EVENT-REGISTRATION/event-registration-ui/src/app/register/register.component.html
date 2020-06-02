@@ -1,0 +1,219 @@
+<nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+    <img src="https://image.flaticon.com/icons/png/512/1173/1173444.png" width="40" height="40"
+        class="d-inline-block align-top" alt="icon">
+    <a class="navbar-brand" routerLink=''>Cloud Geeks Meetup</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/">Register</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/about">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/sponsors">Sponsers</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <button class="btn btn-outline-success my-2 my-sm-0" (click)='openDialog()'>Admin</button>
+        </form>
+    </div>
+</nav>
+<div class="container">
+    <div class="row" style="padding-top: 3rem;" *ngIf='router.url == "/"'>
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="card text-center bg-transparent">
+                <div class="card-header">
+                    <span class="display-4">Register for Meetup</span>
+                </div><br>
+                <div class="container">
+                    <div class="alert alert-success" role="alert" *ngIf='isSent'>
+                        <strong><em class="fa fa-envelope"></em> Email sent ! </strong> Check your mail inbox to confirm
+                        registration. <br> Dont forget to check spam folder..!
+                    </div>
+                </div>
+                <form #registerForm="ngForm" (submit)='register(registerForm);registerForm.resetForm()'>
+                    <mat-form-field style="padding-top: 3rem;">
+                        <mat-label>Full Name</mat-label>
+                        <mat-icon matSuffix>perm_identity</mat-icon>
+                        <input matInput type="text" name="fullName" [(ngModel)]='registration.fullName' required>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Phone Number</mat-label>
+                        <mat-icon matSuffix>phone</mat-icon>
+                        <input matInput type="tel" name="mobile" [(ngModel)]='registration.mobile' required>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Email</mat-label>
+                        <mat-icon matSuffix>email</mat-icon>
+                        <input matInput type="email" name="email" [(ngModel)]='registration.email' required>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Registration Type</mat-label>
+                        <mat-icon matSuffix>category</mat-icon>
+                        <mat-select name="registrationType" [(ngModel)]='registration.registrationType'
+                            (selectionChange)='onSelectChange()' required>
+                            <mat-option value="Self">Self</mat-option>
+                            <mat-option value="Group">Group</mat-option>
+                            <mat-option value="Corporate">Corporate</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Number of Registrations</mat-label>
+                        <mat-icon matSuffix>format_list_numbered</mat-icon>
+                        <input matInput type="number" [readOnly]='registration.registrationType == "Self"'
+                            name="noOfTicket" min="1" [(ngModel)]='registration.noOfTicket' required>
+                    </mat-form-field>
+                    <div class="form-group">
+                        <mat-label> Id: </mat-label>
+                        <input type="file" name="image" (change)="changeListener($event)" accept=".png, .jpg, .jpeg">
+                        <mat-hint *ngIf='!image'>Upload your Photo Id</mat-hint>
+                        <mat-error *ngIf='error'>{{error}}</mat-error>
+                    </div>
+                    <div class="form-group">
+                        <button [disabled]='!registerForm.valid || !fileValid' mat-flat-button type="submit"
+                            color="primary">
+                            <mat-icon>event_note</mat-icon> Register
+                        </button>
+                    </div>
+                </form>
+                <button [disabled]='!registerForm.valid|| !fileValid' class="btn btn-link float-left"
+                    data-toggle="modal" data-target="#exampleModal">
+                    👁 Preview
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h1 class="modal-title" id="exampleModalLabel">
+                                    Preview
+                                </h1>
+                                <table class="table">
+                                    <tr>
+                                        <td><strong> Name: </strong></td>
+                                        <td>{{registration.fullName}}</td>
+                                    </tr>
+                                    <tr class="form-group">
+                                        <td><strong>Phone: </strong></td>
+                                        <td>{{registration.mobile}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong> Email: </strong></td>
+                                        <td>{{registration.email}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Type: </strong></td>
+                                        <td>{{registration.registrationType}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong> Tickets: </strong></td>
+                                        <td>{{registration.noOfTicket}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Id </strong></td>
+                                        <td><img [src]="image" alt="ID"
+                                                style="height: 144px;width: 360px;object-fit: contain;"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" data-dismiss="modal" class="btn btn-outline-danger">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+    <div class="row" style="padding-top: 3rem;line-height: 1.3;" *ngIf='router.url == "/about"'>
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <span class="display-4 text-center">About</span><br><br>
+            <p class="lead">This meetup is regarding the topic "Green Cloud Computing". The word "Green" in here refers
+                to eco-friendly.
+            </p>
+            <p class="lead">
+                Today everyone from room based startups to multi-billion dollar corporations, is
+                making use of "cloud" in their products / services. They use different cloud providers suitable for
+                their use cases. In most of the cases, server quantity used is more than actual requirement. In these
+                cases, additional chunks of servers keep running doing nothing. This ends up in leaving "environmental
+                footprint" somewhere. Thanks to additional amount of electricity required to keep those chunks running.
+            </p>
+            <p class="lead">
+                In this meetup we will discuss emerging technologies in cloud which try to counter this problem. So,
+                <a routerLink="/">register</a> and find out more yourselves...!!!
+            </p>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    <div class="row" style="padding-top: 3rem;line-height: 1.3;" *ngIf='router.url == "/sponsors"'>
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <span class="display-4 text-center">Sponsors</span><br><br>
+            <ul class="bah-accordion lead">
+                <li class="bah-accordion__element">
+                    <input id="section1" name="test-accordion" type="radio" checked=""
+                        class="bah-accordion__element__check">
+                    <label for="section1" class="bah-accordion__element__header"><img
+                            src="https://image.flaticon.com/icons/svg/2906/2906089.svg" alt="logo"
+                            style="height: 32px;width: 32px;"><strong> Rowdy Cloudy</strong></label>
+                    <div class="bah-accordion__element__content bah-accordion__element__content--small">
+                        <p>
+                            Rowdy cloudy in one of the fastest growing cloud solutions provider in the country.
+                            Rowdy Cloudy is focused towards "eco-friendly" computing and have won several awards
+                            from government as well as international community for their efforts in eco-friendly
+                            computing. They offer advanced, AI based auto-scaling to minimize un-necessary use of
+                            computing
+                            power and energy.
+                        </p>
+                    </div>
+                </li>
+                <li class="bah-accordion__element">
+                    <input id="section3" name="test-accordion" type="radio" class="bah-accordion__element__check">
+                    <label for="section3" class="bah-accordion__element__header"><strong><img
+                                src="https://image.flaticon.com/icons/svg/2963/2963117.svg" alt="logo"
+                                style="height: 32px;width: 32px;"></strong> <strong> Cloud Shala</strong></label>
+                    <div class="bah-accordion__element__content bah-accordion__element__content--large">
+                        <p>
+                            Cloud Shala is virtual learning platform to learn cloud computing for free! Cloud shala
+                            has learning paths available for many cloud providers including Rowdy Cloudy. Cloud shala
+                            offers free plan with certification. Their premium plan has additional features like live
+                            support and more number of attempts. All Cloud Shala tutorials are self-paced. They have
+                            tutorials available in interactive text, video, book format.
+                        </p>
+                    </div>
+                </li>
+                <li class="bah-accordion__element">
+                    <input id="section2" name="test-accordion" type="radio" class="bah-accordion__element__check">
+                    <label for="section2" class="bah-accordion__element__header"><img
+                            src="https://image.flaticon.com/icons/png/512/1847/1847560.png" alt="logo"
+                            style="height: 32px;width: 32px;"><strong> ClustMap</strong></label>
+                    <div class="bah-accordion__element__content bah-accordion__element__content--medium">
+                        <p>
+                            ClustMap is cloud service for designing your project's cloud design map. Designing
+                            clusters map / architecture plays critical role in optimization of cloud resources.
+                            ClusterMap is online SaaS service. They have FREE plan for learning, basic design.
+                            Their premium plans start from $5, depending on your project size.
+                        </p>
+                    </div>
+                </li>
+
+            </ul>
+
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>

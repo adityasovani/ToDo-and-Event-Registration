@@ -1,0 +1,81 @@
+mat-form-field{
+    width: 75%;
+    align-self: center;
+}
+
+input.form-align{
+    width: 75%;
+    align-self: center;
+}
+
+.bah-accordion {
+	width: 100%;
+	margin: 10px auto 30px auto;
+  text-align: left;
+}
+
+.bah-accordion__element__header {
+	height: 30px;
+  padding: 5px 20px;
+  position: relative;
+  z-index: 20;
+  display: block;
+  height: 30px;
+  cursor: pointer;
+  height: 30px;
+}
+
+.bah-accordion__element__header:hover {
+  background: #fff;
+}
+
+.bah-accordion__element__check:checked + .bah-accordion__element__header,
+.bah-accordion__element__check:checked + .bah-accordion__element__header:hover {
+  height: 30px;
+}
+
+.bah-accordion__element__header:hover:after,
+.bah-accordion__element__check:checked + .bah-accordion__element__header:hover:after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  right: 13px;
+  top: 7px;
+}
+
+.bah-accordion__element__check {
+  display: none;
+}
+
+.bah-accordion__element__content {
+  overflow: hidden;
+  height: 0;
+  position: relative;
+  z-index: 10;
+  -webkit-transition: height 0.3s ease-in-out,box-shadow 0.6s linear;
+  -moz-transition: height 0.3s ease-in-out,box-shadow 0.6s linear;
+  -o-transition: height 0.3s ease-in-out,box-shadow 0.6s linear;
+  -ms-transition: height 0.3s ease-in-out,box-shadow 0.6s linear;
+  transition: height 0.3s ease-in-out,box-shadow 0.6s linear;
+}
+
+.bah-accordion__element__check:checked ~ .bah-accordion__element__content {
+  -webkit-transition: height 0.5s ease-in-out,box-shadow 0.1s linear;
+  -moz-transition: height 0.5s ease-in-out,box-shadow 0.1s linear;
+  -o-transition: height 0.5s ease-in-out,box-shadow 0.1s linear;
+  -ms-transition: height 0.5s ease-in-out,box-shadow 0.1s linear;
+  transition: height 0.5s ease-in-out,box-shadow 0.1s linear;
+}
+
+.bah-accordion__element__check:checked ~.bah-accordion__element__content--small {
+  height: 140px;
+}
+
+.bah-accordion__element__check:checked ~.bah-accordion__element__content--medium {
+  height: 180px;
+}
+
+.bah-accordion__element__check:checked ~.bah-accordion__element__content--large {
+  height: 230px;
+}

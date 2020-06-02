@@ -1,0 +1,12 @@
+.affix{
+    top: 20px;
+    z-index: 9999 !important;
+}
+
+.inline {
+    vertical-align: middle;
+ }
+
+ mat-sidenav-content{
+    height: 100vh;
+ }
