@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt')
 var mongo = require('mongodb')
 const MongoClient = mongo.MongoClient
 
-const uri = 'mongodb+srv://frost:sierradelta@cluster0-x5mvs.mongodb.net/Event?retryWrites=true&w=majority'
+const uri =  'mongodb+srv://frost:sierradelta@cluster0-x5mvs.mongodb.net/Event?retryWrites=true&w=majority'
 
 var client;
 
